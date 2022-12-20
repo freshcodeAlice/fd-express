@@ -4,6 +4,7 @@ const http = require('http');
 const bodyParser = express.json();
 const {validateUser} = require('./mw/validation.mw');
 const UserController = require('./controllers/User.controller');
+const getUserInstance = require('./mw/getUserInstance.mw');
 const { ValidationError } = require('yup');
 
 const PORT = 3000;
@@ -11,11 +12,11 @@ const PORT = 3000;
 const server = http.createServer(app);
 
 app.post('/users', bodyParser, validateUser, UserController.createUser); 
-app.post('/users/:userId', bodyParser, UserController.loginUser);
+app.post('/users/:userId', bodyParser, getUserInstance, UserController.loginUser);
 app.get('/users/', UserController.getAllUsers);
-app.get('/users/:userId', UserController.getOneUser);
-app.put('/users/:userId', bodyParser, UserController.updateUser);
-app.delete('/users/:userId', UserController.deleteUser);
+app.get('/users/:userId', getUserInstance, UserController.getOneUser);
+app.put('/users/:userId', bodyParser, getUserInstance, UserController.updateUser);
+app.delete('/users/:userId', getUserInstance, UserController.deleteUser);
 
 const errorHandler = async (err, req, res, next) => {
     if (err instanceof TypeError) {
