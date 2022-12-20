@@ -1,13 +1,14 @@
 const express = require('express');
 const app = express();
 const http = require('http');
+const cors = require('cors');
 const bodyParser = express.json();
 const {validateUser} = require('./mw/validation.mw');
 const UserController = require('./controllers/User.controller');
 const getUserInstance = require('./mw/getUserInstance.mw');
 const { ValidationError } = require('yup');
 
-const PORT = 3000;
+const PORT = 5000;
 
 const server = http.createServer(app);
 
@@ -30,6 +31,8 @@ const errorHandler = async (err, req, res, next) => {
     res.status(404).send();
 }
 
+
+app.use(cors());
 app.use(errorHandler);
 
 server.listen(PORT, ()=> {
@@ -38,7 +41,7 @@ server.listen(PORT, ()=> {
 
 
 /*
-Реалізувати можливіть авторизації користувача
+Об'єднати фронт і бек для реєстрації та авторизації користувачів
 
 
 
