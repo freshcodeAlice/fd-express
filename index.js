@@ -11,6 +11,7 @@ const PORT = 3000;
 const server = http.createServer(app);
 
 app.post('/users', bodyParser, validateUser, UserController.createUser); 
+app.post('/users/:userId', bodyParser, UserController.loginUser);
 app.get('/users/', UserController.getAllUsers);
 app.get('/users/:userId', UserController.getOneUser);
 app.put('/users/:userId', bodyParser, UserController.updateUser);
@@ -36,7 +37,7 @@ server.listen(PORT, ()=> {
 
 
 /*
-Додати ендпоінт (ручку) для Update та Delete юзерів.
+Реалізувати можливіть авторизації користувача
 
 
 
